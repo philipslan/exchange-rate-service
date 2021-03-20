@@ -8,6 +8,7 @@ import { ExchangeRateService } from "./ExchangeRates/ExchangeRatesService";
 import { Container } from "typedi";
 import { FixerExchangeRateProvider } from "./ExchangeRates/FixerExchangeRateProvider";
 import { updateExchangeRateJob } from "./Jobs/UpdateExchangeRateJob";
+import { default as expressPlayground }from "graphql-playground-middleware-express";
 
 // Setting up container for DI
 const rateMap = new Map<string, number>();
@@ -38,6 +39,8 @@ Container.set("FixerExchangeRateProvider", new FixerExchangeRateProvider(rateMap
   });
 
   apolloServer.applyMiddleware({ app, cors: false });
+  app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
+
 
   // Add exchange rest endpoint for alternative querying method
   app.get("/exchange", (req, res) => {
