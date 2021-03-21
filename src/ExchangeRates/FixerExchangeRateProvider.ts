@@ -20,14 +20,16 @@ export class FixerExchangeRateProvider implements IExchangeRateProvider {
   }
 
   getRate(from: string, to: string): number {
-    if (!(from in this.rates)) {
+    const fromUpper = from.toUpperCase();
+    const toUpper = to.toUpperCase();
+    if (!(fromUpper in this.rates)) {
       throw new Error(`${from} is not a valid exchange symbol`);
     }
-    if (!(to in this.rates)) {
+    if (!(toUpper in this.rates)) {
       throw new Error(`${to} is not a valid exchange symbol`);
     }
-    const r1 = this.rates[from];
-    const r2 = this.rates[to];
+    const r1 = this.rates[fromUpper];
+    const r2 = this.rates[toUpper];
     return r2 / r1;
   }
 }

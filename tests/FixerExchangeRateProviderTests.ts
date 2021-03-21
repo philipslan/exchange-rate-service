@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { FixerExchangeRateProvider } from "../src/ExchangeRates/FixerExchangeRateProvider";
 
-describe('ExchangeRateService', function() {
+describe('FixerExchangeRateProviderTests', function() {
   let exchangeProvider: FixerExchangeRateProvider;
   let fixerRateMap: Map<string, number>;
 
