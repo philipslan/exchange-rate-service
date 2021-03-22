@@ -11,17 +11,13 @@ describe('FixerExchangeRateProviderTests', function() {
   });
 
   it("getRate throws error when inputs are invalid", function() {
-    assert.throws(() => exchangeProvider.getRate("A", "B"));
-    fixerRateMap["A"] = 100;
-    assert.throws(() => exchangeProvider.getRate("A", "B"));
-    fixerRateMap["B"] = 200;
-    assert.throws(() => exchangeProvider.getRate("A", "C"));
+    assert.throws(() => exchangeProvider.getRate("A"));
   });
 
-  it("getRate returns relative ratio between from and to", function() {
+  it("getRate returns rate from existing symbol", function() {
     fixerRateMap["A"] = 100;
     fixerRateMap["B"] = 200;
-    assert.strictEqual(exchangeProvider.getRate("A", "B"), 2);
-    assert.strictEqual(exchangeProvider.getRate("B", "A"), 0.5);
+    assert.strictEqual(exchangeProvider.getRate("A"), 100);
+    assert.strictEqual(exchangeProvider.getRate("B"), 200);
   });
 });

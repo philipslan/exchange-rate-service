@@ -19,11 +19,21 @@ describe('ExchangeRateService', function() {
   });
 
   it("findRate will retrieve rate from provider", function() {
-    const retVal = 10;
-    exchangeProvider.setup(x => x.getRate("a", "b")).returns(() => retVal);
-    const val = exchangeRateService.findRate("a", "b");
+    const retVal = 2;
+    exchangeProvider.setup(x => x.getRate("A")).returns(() => 100);
+    exchangeProvider.setup(x => x.getRate("B")).returns(() => 200);
+    const val = exchangeRateService.findRate("A", "B");
     assert.strictEqual(val, retVal);
+    const val2 = exchangeRateService.findRate("B", "A");
+    assert.strictEqual(val2, 1 / retVal);
   });
+
+  it("findRate works with mix casing", function() {
+    exchangeProvider.setup(x => x.getRate("A")).returns(() => 100);
+    exchangeProvider.setup(x => x.getRate("B")).returns(() => 200);
+    const val = exchangeRateService.findRate("a", "B");
+    assert.strictEqual(val, 2);
+  })
 
   it("updateRates will call fetchFromSource", async function() {
     await exchangeRateService.updateRates();

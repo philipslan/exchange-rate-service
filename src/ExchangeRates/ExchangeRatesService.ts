@@ -13,7 +13,11 @@ export class ExchangeRateService {
   }
 
   findRate(from: string, to: string): number {
-    return this.provider.getRate(from, to);
+    const fromUpper = from.toUpperCase();
+    const toUpper = to.toUpperCase();
+    const r1 = this.provider.getRate(fromUpper);
+    const r2 = this.provider.getRate(toUpper);
+    return r2 / r1;
   }
 
   async updateRates(): Promise<void> {

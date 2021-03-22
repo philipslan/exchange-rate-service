@@ -46,6 +46,9 @@ Container.set("FixerExchangeRateProvider", new FixerExchangeRateProvider(rateMap
   app.get("/exchange", (req, res) => {
     try {
       const { from, to } = req.query as { from: string, to: string };
+      if (from == null || to == null) {
+        throw new Error("Query is missing from or to values to calculate currency exchange");
+      }
       const rate = rateService.findRate(from, to);
       res.json({ from, to, rate  });
     } catch (error) {
